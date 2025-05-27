@@ -1,0 +1,19 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/*.xml'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'target/*.jar'
+    ArtifactName: 'drop'
+
